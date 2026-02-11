@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ExpressThoughts — Catatan Ringkas & Ide Harian</title>
+  <meta name="description" content="ExpressThoughts adalah blog catatan ringkas: ide harian, rangkuman belajar, dan tulisan pendek yang mudah dibaca." />
+  <link rel="canonical" href="https://expressthoughts.site/" />
+
+  <!-- Fonts (beda total) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500,700,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#12131a',
+            paper: '#fbfaf7',
+            muted: '#6b7280',
+            line: 'rgba(18,19,26,.12)',
+            accent: '#7c3aed',  // ungu hangat
+            accent2: '#f97316'  // oranye hangat
+          },
+          fontFamily: {
+            serif: ['Fraunces','serif'],
+            sans: ['DM Sans','system-ui','sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root{
+      --paper:#fbfaf7;
+      --ink:#12131a;
+      --line:rgba(18,19,26,.12);
+      --soft:rgba(18,19,26,.72);
+      --accent:#7c3aed;
+      --accent2:#f97316;
+    }
+    body{
+      background:
+        radial-gradient(900px 450px at 20% -10%, rgba(124,58,237,.12), transparent 60%),
+        radial-gradient(900px 450px at 85% 0%, rgba(249,115,22,.10), transparent 60%),
+        var(--paper);
+      color: var(--ink);
+    }
+    .shell{ max-width: 980px; margin: 0 auto; }
+    .card{
+      background: rgba(255,255,255,.76);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(18,19,26,.06);
+    }
+    .topbar{
+      background: rgba(251,250,247,.72);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.7);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing:.25px;
+      color: rgba(18,19,26,.78);
+    }
+    .nav a{
+      text-decoration:none;
+      font-weight:800;
+      color: rgba(18,19,26,.78);
+    }
+    .nav a:hover{
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .btn{
+      display:inline-block;
+      padding:10px 14px;
+      border-radius: 12px;
+      font-weight: 900;
+      color:#fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 12px 22px rgba(124,58,237,.16);
+      text-decoration:none;
+    }
+    .btn:hover{ text-decoration: underline; text-underline-offset: 3px; }
+
+    .post-title a{
+      text-decoration:none;
+      color: var(--ink);
+    }
+    .post-title a:hover{
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    blockquote{
+      margin: 14px 0;
+      padding: 12px 14px;
+      border-left: 5px solid rgba(124,58,237,.75);
+      background: rgba(124,58,237,.07);
+      border-radius: 14px;
+      font-weight: 700;
+      color: rgba(18,19,26,.84);
+    }
+
+    .chip{
+      display:inline-flex;
+      padding:5px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.7);
+      font-weight: 800;
+      font-size: 12px;
+      color: rgba(18,19,26,.72);
+    }
+  </style>
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebSite",
+        "name":"ExpressThoughts",
+        "url":"https://expressthoughts.site/",
+        "description":"Blog catatan ringkas: ide harian, rangkuman belajar, dan tulisan pendek."
+      },
+      {
+        "@type":"Blog",
+        "name":"ExpressThoughts",
+        "url":"https://expressthoughts.site/"
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body class="font-sans">
+
+  <!-- Topbar -->
+  <div class="topbar sticky top-0 z-50">
+    <div class="shell px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="badge">EXPRESSTHOUGHTS • JOURNAL</span>
+        <span class="hidden sm:inline text-xs font-extrabold text-black/50">expressthoughts.site</span>
+      </div>
+      <nav class="nav flex gap-5 text-sm">
+        <a href="#tulisan">Tulisan</a>
+        <a href="#topik">Topik</a>
+        <a href="#tentang">Tentang</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <header class="shell px-6 pt-12 pb-10">
+    <div class="card p-7 md:p-10">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h1 class="font-serif text-3xl md:text-5xl font-extrabold leading-tight">
+            ExpressThoughts
+          </h1>
+          <p class="mt-4 text-sm md:text-base text-black/70 max-w-xl">
+            Catatan ringkas dan ide harian: fokus pada hal-hal kecil yang bisa dipraktikkan.
+            Tidak harus panjang, yang penting jelas dan mudah ditelusuri.
+          </p>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a class="btn" href="#tulisan">Mulai Membaca</a>
+            <a class="btn" href="#tentang" style="background:linear-gradient(135deg,#111827,#7c3aed); box-shadow:0 12px 22px rgba(17,24,39,.12);">
+              Tentang Blog
+            </a>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="chip">Ringkas</span>
+            <span class="chip">Praktis</span>
+            <span class="chip">Rapi</span>
+            <span class="chip">Arsip</span>
+          </div>
+        </div>
+
+        <!-- SVG doodle beda total -->
+        <div class="md:justify-self-end">
+          <svg viewBox="0 0 520 360" class="w-full max-w-md mx-auto" aria-label="Ilustrasi jurnal">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#7c3aed" stop-opacity="0.9"/>
+                <stop offset="1" stop-color="#f97316" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+            <rect x="60" y="70" width="400" height="220" rx="22" fill="#ffffff" opacity="0.9" stroke="rgba(18,19,26,.12)"/>
+            <rect x="95" y="105" width="330" height="18" rx="9" fill="url(#g)" opacity="0.22"/>
+            <rect x="95" y="140" width="240" height="12" rx="6" fill="rgba(18,19,26,.20)"/>
+            <rect x="95" y="162" width="300" height="12" rx="6" fill="rgba(18,19,26,.14)"/>
+            <rect x="95" y="184" width="275" height="12" rx="6" fill="rgba(18,19,26,.12)"/>
+
+            <g transform="translate(95,220)">
+              <rect x="0" y="0" width="120" height="48" rx="14" fill="#7c3aed" opacity="0.10"/>
+              <rect x="140" y="0" width="190" height="48" rx="14" fill="#f97316" opacity="0.08"/>
+              <circle cx="24" cy="24" r="10" fill="#7c3aed" opacity="0.35"/>
+              <circle cx="164" cy="24" r="10" fill="#f97316" opacity="0.35"/>
+              <rect x="40" y="18" width="64" height="12" rx="6" fill="rgba(18,19,26,.16)"/>
+              <rect x="180" y="18" width="120" height="12" rx="6" fill="rgba(18,19,26,.14)"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell px-6 pb-16">
+
+    <!-- Posts -->
+    <section id="tulisan" class="card p-7 md:p-10">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div>
+          <h2 class="font-serif text-2xl md:text-3xl font-extrabold">Tulisan Terbaru</h2>
+          <p class="mt-2 text-sm text-black/70">Beberapa catatan singkat untuk dibaca cepat.</p>
+        </div>
+        <div class="text-xs font-bold text-black/50">Update berkala • arsip mini</div>
+      </div>
+
+      <div class="mt-7 grid md:grid-cols-2 gap-5 text-sm">
+        <article class="card p-6">
+          <div class="text-xs font-extrabold text-black/50">Catatan • 5 menit</div>
+          <h3 class="post-title font-serif text-xl font-extrabold mt-2">
+            <a href="#post-1">Tulis Ringkas, Tapi Bisa Dicari Lagi</a>
+          </h3>
+          <p class="mt-3 text-black/70">
+            Ada tiga hal yang bikin catatan berguna: judul jelas, tanggal, dan satu paragraf ringkasan.
+            Sisanya bisa ditambah belakangan.
+          </p>
+        </article>
+
+        <article class="card p-6">
+          <div class="text-xs font-extrabold text-black/50">Ide • 4 menit</div>
+          <h3 class="post-title font-serif text-xl font-extrabold mt-2">
+            <a href="#post-2">Cek Silang Itu Kebiasaan, Bukan Beban</a>
+          </h3>
+          <p class="mt-3 text-black/70">
+            Kalau ada dua sumber, bandingkan. Kalau ada tiga, rangkum. Yang penting konsisten,
+            bukan perfeksionis.
+          </p>
+        </article>
+      </div>
+
+      <blockquote class="mt-7">
+        <p>“Sedikit catatan setiap hari lebih kuat daripada niat besar sekali-sekali.”</p>
+      </blockquote>
+    </section>
+
+    <!-- Topics -->
+    <section id="topik" class="mt-12 card p-7 md:p-10">
+      <h2 class="font-serif text-2xl md:text-3xl font-extrabold">Topik</h2>
+      <p class="mt-3 text-sm text-black/70">
+        Blog ini cocok untuk gaya belajar mandiri: ringkas, sistematis, dan bisa diulang.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-2">
+        <span class="chip">Rangkuman</span>
+        <span class="chip">Catatan</span>
+        <span class="chip">Metode</span>
+        <span class="chip">Arsip</span>
+        <span class="chip">Produktivitas</span>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="tentang" class="mt-12 card p-7 md:p-10">
+      <h2 class="font-serif text-2xl md:text-3xl font-extrabold">Tentang</h2>
+      <p class="mt-4 text-sm md:text-base text-black/70">
+        ExpressThoughts adalah ruang kecil untuk merapikan pikiran: ide, catatan, dan rangkuman singkat.
+        Struktur dibuat sederhana agar cepat dibuka, cepat dibaca, dan mudah diperbarui.
+      </p>
+      <p class="mt-4 text-xs font-bold text-black/50">
+        Tip: Kalau kamu ingin menambahkan “referensi”, taruh di akhir artikel yang relevan (bukan daftar massal).
+      </p>
+    </section>
+<!-- Referensi Eksternal -->
+<section id="referensi" class="mt-14 card p-7 md:p-10">
+  <h2 class="font-serif text-2xl md:text-3xl font-extrabold mb-6">
+    Referensi Data & Prediksi
+  </h2>
+
+  <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 links text-sm">
+    <li><a href="https://datahklotto.us/" target="_blank" rel="noopener">Data HK Lotto</a></li>
+    <li><a href="http://178.128.52.7/" target="_blank" rel="noopener">Data SDY Lotto</a></li>
+    <li><a href="https://pafiairseruk.org/" target="_blank" rel="noopener">Data HK</a></li>
+    <li><a href="http://178.128.89.94/" target="_blank" rel="noopener">Data SGP</a></li>
+    <li><a href="https://pafitanglad.org/" target="_blank" rel="noopener">Data SDY</a></li>
+    <li><a href="https://lamarsalaplayadegandia.com/" target="_blank" rel="noopener">Data HK</a></li>
+    <li><a href="http://159.223.35.146/" target="_blank" rel="noopener">Data SDY Lotto</a></li>
+    <li><a href="https://wholesalejerseys4sale.com/" target="_blank" rel="noopener">Prediksi Keluaran</a></li>
+    <li><a href="https://pafibenermeriahkabupaten.org/" target="_blank" rel="noopener">Prediksi Jitu</a></li>
+    <li><a href="http://178.128.116.128/" target="_blank" rel="noopener">Prediksi SDY</a></li>
+    <li><a href="https://prediksihkpools.net/" target="_blank" rel="noopener">Prediksi HK</a></li>
+    <li><a href="http://178.128.215.158/" target="_blank" rel="noopener">Angkanet</a></li>
+    <li><a href="http://178.128.21.45/" target="_blank" rel="noopener">Angkanet Result</a></li>
+    <li><a href="https://pafipcgunungkidulkab.org/" target="_blank" rel="noopener">Data HK 6D</a></li>
+  </ul>
+</section>
+
+  </main>
+
+  <footer class="border-t" style="border-color:rgba(18,19,26,.10)">
+    <div class="shell px-6 py-10 text-center text-xs font-bold" style="color:rgba(18,19,26,.55)">
+      © 2026 expressthoughts.site — Personal Journal
+    </div>
+  </footer>
+
+</body>
+</html>
